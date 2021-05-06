@@ -1,0 +1,10 @@
+MySQLServer: ''
+MySQLPort: 3306
+MySQLDatabase: ''
+MySQLUsername: ''
+MySQLPassword: ''
+MySQLOption: '?allowPublicKeyRetrieval=true&useSSL=false'
+
+DiscordWebHook: ''
+Area: ''
+AdminUUID: ''

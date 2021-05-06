@@ -1,0 +1,30 @@
+name: NanamiBanSystem
+version: @version@
+main: xyz.n7mn.dev.nanamibansystem.NanamiBanSystem
+authors: [ 7mi_chan ]
+description: NanamiBanSystem
+commands:
+  gban:
+    description: ''
+    usage: '/gban'
+    permission: 'bansystem.gban'
+    permission-message: ''
+  lban:
+    description: ''
+    usage: '/lban'
+    permission: 'bansystem.ban'
+  ipban:
+    description: ''
+    usage: '/ipban'
+    permission: 'bansystem.ban'
+    permission-message: ''
+  unban:
+    description: ''
+    usage: '/unban'
+    permission: 'bansystem.unban'
+    permission-message: ''
+  baninfo:
+    description: ''
+    usage: '/baninfo'
+    permission: 'bansystem.baninfo'
+    permission-message: ''

@@ -1,0 +1,2 @@
+# NanamiBanSystem
+2代目ななみ鯖BANシステム
