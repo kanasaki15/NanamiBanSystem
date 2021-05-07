@@ -29,7 +29,7 @@ repositories {
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT'
-    compile 'com.github.nanami-network:nanamiserver-api:0.2.3'
+    compile 'com.github.nanami-network:nanamiserver-api:0.2.4'
     compile 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 

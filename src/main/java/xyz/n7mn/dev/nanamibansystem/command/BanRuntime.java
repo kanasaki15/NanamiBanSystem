@@ -64,7 +64,9 @@ class BanRuntime {
                             .url("https://api.mojang.com/users/profiles/minecraft/"+targetName)
                             .build();
                     Response response = client.newCall(request).execute();
-                    targetUUID = UUID.fromString(response.body().string().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+                    String json = response.body().string();
+                    ApiData data = new Gson().fromJson(json, ApiData.class);
+                    targetUUID = UUID.fromString(data.getId().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
                     response.close();
                 } catch (IOException e){
                     e.printStackTrace();
@@ -208,7 +210,9 @@ class BanRuntime {
                         .url("https://api.mojang.com/users/profiles/minecraft/"+targetName)
                         .build();
                 Response response = client.newCall(request).execute();
-                targetUUID = UUID.fromString(response.body().string().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+                String json = response.body().string();
+                ApiData data = new Gson().fromJson(json, ApiData.class);
+                targetUUID = UUID.fromString(data.getId().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
                 response.close();
             } catch (IOException e){
                 e.printStackTrace();

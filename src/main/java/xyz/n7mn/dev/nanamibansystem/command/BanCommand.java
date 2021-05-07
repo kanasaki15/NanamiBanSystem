@@ -4,7 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import xyz.n7mn.dev.api.Ban;
 
 
@@ -21,12 +20,9 @@ public class BanCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String area = plugin.getConfig().getString("Area");
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                BanRuntime.run(plugin, banSystem, area, sender, args);
-            }
-        }.runTaskAsynchronously(plugin);
+        new Thread(()->{
+            BanRuntime.run(plugin, banSystem, area, sender, args);
+        }).start();
 
         return true;
     }

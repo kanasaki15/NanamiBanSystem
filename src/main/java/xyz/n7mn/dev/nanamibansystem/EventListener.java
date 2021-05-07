@@ -10,6 +10,7 @@ import xyz.n7mn.dev.api.data.BanData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +34,15 @@ public class EventListener implements Listener {
         List<BanData> list;
         try {
             list = banSystem.getList(targetUUID, true);
+            Date nowDate = new Date();
+            List<BanData> copyList = new ArrayList<>(list);
+
+            for (BanData data : copyList){
+                if (data.getEndDate().getTime() < nowDate.getTime()){
+                    list.remove(data);
+                }
+            }
+
             boolean isFound = list.size() > 0;
 
             for (BanData data : list){
