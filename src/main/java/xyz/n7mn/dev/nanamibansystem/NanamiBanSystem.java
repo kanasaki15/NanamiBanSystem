@@ -4,7 +4,6 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.n7mn.dev.api.Ban;
 import xyz.n7mn.dev.nanamibansystem.command.*;
-import xyz.n7mn.dev.nanamibansystem.tab.BanPlayerList;
 import xyz.n7mn.dev.nanamibansystem.tab.PlayerListForTab;
 
 public final class NanamiBanSystem extends JavaPlugin {
@@ -24,7 +23,6 @@ public final class NanamiBanSystem extends JavaPlugin {
         );
 
         PlayerListForTab tab = new PlayerListForTab(1);
-        BanPlayerList tab2 = new BanPlayerList(banSystem);
         PluginCommand gban = getCommand("gban");
         PluginCommand ban = getCommand("lban");
         PluginCommand ipban = getCommand("ipban");
@@ -38,9 +36,9 @@ public final class NanamiBanSystem extends JavaPlugin {
         ipban.setExecutor(new IPBanCommand(banSystem, this));
         ipban.setTabCompleter(tab);
         unban.setExecutor(new UnBanCommand(banSystem));
-        unban.setTabCompleter(tab2);
+        unban.setTabCompleter(tab);
         baninfo.setExecutor(new BanInfoCommand(banSystem));
-        baninfo.setTabCompleter(tab2);
+        baninfo.setTabCompleter(tab);
 
         getServer().getPluginManager().registerEvents(new EventListener(banSystem), this);
         getLogger().info(getName() + " Ver "+getDescription().getVersion()+" 起動");
