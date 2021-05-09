@@ -28,3 +28,13 @@ commands:
     usage: '/baninfo'
     permission: 'bansystem.baninfo'
     permission-message: ''
+  antiproxy:
+    description: ''
+    usage: '/antiproxy'
+    permission: 'bansystem.ban'
+    permission-message: ''
+  antivpn:
+    description: ''
+    usage: '/antivpn'
+    permission: 'bansystem.ban'
+    permission-message: ''
