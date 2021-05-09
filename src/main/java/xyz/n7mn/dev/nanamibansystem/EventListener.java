@@ -1,5 +1,14 @@
 package xyz.n7mn.dev.nanamibansystem;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -8,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 import xyz.n7mn.dev.api.Ban;
 import xyz.n7mn.dev.api.data.BanData;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,6 +81,65 @@ public class EventListener implements Listener {
             }
         } catch (SQLException ex){
             ex.printStackTrace();
+        }
+
+        List<String> throughList = (List<String>) plugin.getConfig().getList("AntiThroughList");
+        if (throughList != null && throughList.size() > 0){
+            for (String through : throughList){
+                if (through.length() != 36){
+                    continue;
+                }
+
+                if (e.getUniqueId().equals(UUID.fromString(through))){
+                    return;
+                }
+            }
+        }
+
+        // http://proxycheck.io/v2/<ip>?key=<api key>&risk=1&vpn=1
+        String ip = e.getAddress().getHostAddress();
+        String url = "http://proxycheck.io/v2/"+ip+"?key="+plugin.getConfig().getString("ProxyCheckIoAPI")+"&risk=1&vpn=1";
+        
+        // debug
+        // ip = "219.83.125.226";
+        // url = "https://proxycheck.io/v2/219.83.125.226?risk=1&vpn=1";
+        
+        String json = "";
+        // System.out.println("debug : " + ip);
+        if (plugin.getConfig().getBoolean("isAntiProxy") || plugin.getConfig().getBoolean("isAntiVPN")){
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                json = response.body().string();
+                response.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+
+            JsonObject object = new Gson().fromJson(json, JsonObject.class);
+            JsonElement element = object.get("status");
+            // System.out.println("debug1 : " + element.getAsString());
+            if (element.getAsString().equals("ok")){
+                JsonElement data = object.get(ip);
+                JsonElement proxy = data.getAsJsonObject().get("proxy");
+                // System.out.println("debug2 : " + proxy.getAsString());
+                JsonElement type = data.getAsJsonObject().get("type");
+                // System.out.println("debug3 : " + type.getAsString());
+                if (proxy.getAsString().equals("yes") && plugin.getConfig().getBoolean("isAntiProxy")){
+                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "現在 Proxyからは接続できません。");
+                    return;
+                }
+
+                if (type.getAsString().equals("VPN") && plugin.getConfig().getBoolean("isAntiVPN")){
+                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "現在 VPNからは接続できません。");
+                }
+
+            }
         }
     }
 

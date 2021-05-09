@@ -8,3 +8,9 @@ MySQLOption: '?allowPublicKeyRetrieval=true&useSSL=false'
 DiscordWebHook: ''
 Area: ''
 AdminUUID: ''
+
+ProxyCheckIoAPI: ''
+
+isAntiProxy: false
+isAntiVPN: false
+AntiThroughList: []
