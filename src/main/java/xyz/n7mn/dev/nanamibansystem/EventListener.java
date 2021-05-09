@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.plugin.Plugin;
 import xyz.n7mn.dev.api.Ban;
 import xyz.n7mn.dev.api.data.BanData;
 
@@ -17,8 +18,10 @@ import java.util.UUID;
 public class EventListener implements Listener {
 
     private final Ban banSystem;
-    public EventListener(Ban banSystem){
+    private final Plugin plugin;
+    public EventListener(Ban banSystem, Plugin plugin){
         this.banSystem = banSystem;
+        this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -39,6 +42,10 @@ public class EventListener implements Listener {
 
             for (BanData data : copyList){
                 if (data.getEndDate().getTime() < nowDate.getTime()){
+                    list.remove(data);
+                }
+
+                if (!data.getArea().equals(plugin.getConfig().getString("Area")) && !data.getArea().equals("all")) {
                     list.remove(data);
                 }
             }
