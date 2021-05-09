@@ -40,7 +40,7 @@ public final class NanamiBanSystem extends JavaPlugin {
         baninfo.setExecutor(new BanInfoCommand(banSystem));
         baninfo.setTabCompleter(tab);
 
-        getServer().getPluginManager().registerEvents(new EventListener(banSystem), this);
+        getServer().getPluginManager().registerEvents(new EventListener(banSystem, this), this);
         getLogger().info(getName() + " Ver "+getDescription().getVersion()+" 起動");
     }
 
