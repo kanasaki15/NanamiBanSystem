@@ -2,7 +2,6 @@ package xyz.n7mn.dev.nanamibansystem;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.n7mn.dev.api.Ban;
 import xyz.n7mn.dev.nanamibansystem.command.*;
 import xyz.n7mn.dev.nanamibansystem.tab.PlayerListForTab;
 
@@ -13,15 +12,6 @@ public final class NanamiBanSystem extends JavaPlugin {
         // Plugin startup logic
         saveDefaultConfig();
 
-        Ban banSystem = new Ban(
-                getConfig().getString("MySQLServer"),
-                getConfig().getInt("MySQLPort"),
-                getConfig().getString("MySQLDatabase"),
-                getConfig().getString("MySQLOption"),
-                getConfig().getString("MySQLUsername"),
-                getConfig().getString("MySQLPassword")
-        );
-
         PlayerListForTab tab = new PlayerListForTab(1);
         PluginCommand gban = getCommand("gban");
         PluginCommand ban = getCommand("lban");
@@ -31,21 +21,21 @@ public final class NanamiBanSystem extends JavaPlugin {
         PluginCommand antiProxy = getCommand("antiproxy");
         PluginCommand antiVPN = getCommand("antivpn");
 
-        gban.setExecutor(new GlobalBanCommand(banSystem, this));
+        gban.setExecutor(new GlobalBanCommand(this));
         gban.setTabCompleter(tab);
-        ban.setExecutor(new BanCommand(banSystem, this));
+        ban.setExecutor(new BanCommand(this));
         ban.setTabCompleter(tab);
-        ipban.setExecutor(new IPBanCommand(banSystem, this));
+        ipban.setExecutor(new IPBanCommand(this));
         ipban.setTabCompleter(tab);
-        unban.setExecutor(new UnBanCommand(banSystem));
+        unban.setExecutor(new UnBanCommand());
         unban.setTabCompleter(tab);
-        baninfo.setExecutor(new BanInfoCommand(banSystem));
+        baninfo.setExecutor(new BanInfoCommand());
         baninfo.setTabCompleter(tab);
 
         antiProxy.setExecutor(new AntiProxyCommand(this));
         antiVPN.setExecutor(new AntiVPNCommand(this));
 
-        getServer().getPluginManager().registerEvents(new EventListener(banSystem, this), this);
+        getServer().getPluginManager().registerEvents(new EventListener(this), this);
         getLogger().info(getName() + " Ver "+getDescription().getVersion()+" 起動");
     }
 

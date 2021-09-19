@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'xyz.n7mn.dev'
-version = '1.0'
+version = '1.1'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -13,24 +13,23 @@ targetCompatibility = '1.8'
 repositories {
     mavenCentral()
     maven {
-        name = 'papermc-repo'
-        url = 'https://papermc.io/repo/repository/maven-public/'
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
+
+
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
-
-    maven {
-        name = 'jitpack'
-        url  = 'https://jitpack.io'
-    }
 }
 
 dependencies {
-    compileOnly 'com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT'
-    compile 'com.github.nanami-network:nanamiserver-api:0.2.6'
-    compile 'com.squareup.okhttp3:okhttp:4.9.0'
+    compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+    compile 'com.squareup.okhttp3:okhttp:4.9.1'
+    compile 'mysql:mysql-connector-java:8.0.26'
+
+
 }
 
 processResources {

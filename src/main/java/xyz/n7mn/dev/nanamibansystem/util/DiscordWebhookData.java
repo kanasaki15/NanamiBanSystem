@@ -1,6 +1,6 @@
-package xyz.n7mn.dev.nanamibansystem.command;
+package xyz.n7mn.dev.nanamibansystem.util;
 
-class DiscordWebhookData {
+public class DiscordWebhookData {
 
     private String content;
     private String username;

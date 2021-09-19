@@ -14,3 +14,5 @@ ProxyCheckIoAPI: ''
 isAntiProxy: false
 isAntiVPN: false
 AntiThroughList: []
+
+DiscordInviteURL: 'https://discord.gg/Xx8AfZXSP6'
