@@ -52,7 +52,7 @@ public class BanRuntime {
                 }
 
                 if (player == null || banUserName == null) {
-                    System.out.println("aiue");
+                    //System.out.println("aiue");
                     try {
                         OkHttpClient client = new OkHttpClient();
                         Request request = new Request.Builder().url("https://api.mojang.com/user/profiles/"+TargetPlayer.toString().replaceAll("-","")+"/names").build();
@@ -263,5 +263,64 @@ public class BanRuntime {
         }
 
         return map;
+    }
+
+
+    public static Map<Integer, BanData> getData(Plugin plugin, UUID targetPlayer){
+
+        HashMap<Integer, BanData> map = new HashMap<>();
+
+        try {
+            boolean found = false;
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            }
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            con.setAutoCommit(true);
+
+            PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? ORDER BY BanID DESC");
+            statement1.setString(1, targetPlayer.toString());
+
+            ResultSet set1 = statement1.executeQuery();
+
+            while (set1.next()){
+                map.put(
+                        set1.getInt("BanID"),
+                        new BanData(
+                                set1.getInt("BanID"),
+                                UUID.fromString(set1.getString("UserUUID")),
+                                set1.getString("Reason"),
+                                set1.getString("Area"),
+                                set1.getString("IP"),
+                                new Date(set1.getTimestamp("EndDate").getTime()),
+                                new Date(set1.getTimestamp("ExecuteDate").getTime()),
+                                UUID.fromString(set1.getString("ExecuteUserUUID")),
+                                set1.getBoolean("Active")
+                        )
+                );
+            }
+
+            set1.close();
+            statement1.close();
+            con.close();
+
+            return map;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return map;
+
     }
 }
