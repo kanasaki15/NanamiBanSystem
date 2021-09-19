@@ -29,7 +29,7 @@ public final class NanamiBanSystem extends JavaPlugin {
         ipban.setTabCompleter(tab);
         unban.setExecutor(new UnBanCommand());
         unban.setTabCompleter(tab);
-        baninfo.setExecutor(new BanInfoCommand());
+        baninfo.setExecutor(new BanInfoCommand(this));
         baninfo.setTabCompleter(tab);
 
         antiProxy.setExecutor(new AntiProxyCommand(this));

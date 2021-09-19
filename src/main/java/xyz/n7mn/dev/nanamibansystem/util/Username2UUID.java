@@ -1,6 +1,6 @@
 package xyz.n7mn.dev.nanamibansystem.util;
 
-class Username2UUID {
+public class Username2UUID {
 
     private String name;
     private long changedToAt;
