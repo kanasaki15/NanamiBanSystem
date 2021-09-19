@@ -103,7 +103,7 @@ public class BanInfoCommand implements CommandExecutor {
                                     "実行日時 :\n" +
                                     format.format(data.getExecuteDate()) + "\n" +
                                     "実行者 :\n" +
-                                    userName+" (" + data.getUserUUID()+")"
+                                    userName+" (" + data.getExecuteUserUUID()+")"
                             );
                         });
 
@@ -153,7 +153,7 @@ public class BanInfoCommand implements CommandExecutor {
                                     "範囲 : " + areaName + "\n" +
                                     "有効期限 : " + format.format(data.getEndDate()) + "\n" +
                                     "実行日時 : " + format.format(data.getExecuteDate()) + "\n" +
-                                    "実行者 : "+userName+" (" + data.getUserUUID()+")"
+                                    "実行者 : "+userName+" (" + data.getExecuteUserUUID()+")"
                             );
                         });
                     }

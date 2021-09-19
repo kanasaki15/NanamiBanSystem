@@ -170,8 +170,49 @@ public class BanRuntime {
         }).start();
     }
 
-    public static void unban(Plugin plugin, String Reason, String area, UUID targetPlayer, UUID fromPlayer){
+    @Deprecated
+    public static void unban(Plugin plugin, UUID targetPlayer){
+        if (isBan(plugin, targetPlayer)){
+            getData(plugin, targetPlayer).forEach((id, data)->{
+                unban(plugin, id);
+            });
+        }
+    }
 
+    public static boolean unban(Plugin plugin, int BanID){
+
+        try {
+            boolean found = false;
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            }
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            con.setAutoCommit(true);
+
+            PreparedStatement statement1 = con.prepareStatement("UPDATE `BanList` SET Active = 0 WHERE BanID = ?");
+            statement1.setInt(1, BanID);
+            statement1.execute();
+
+            statement1.close();
+            con.close();
+
+            return true;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 
 
