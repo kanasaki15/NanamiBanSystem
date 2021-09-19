@@ -1,22 +1,19 @@
 package xyz.n7mn.dev.nanamibansystem.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.UUID;
 
 public class BanData {
 
-    private long BanID = 0;
-    private UUID UserUUID = null;
-    private String Reason = "";
-    private String Area = "all";
-    private String IP = "";
-    private Date EndDate = new Date();
-    private Date ExecuteDate = new Date();
-    private UUID ExecuteUserUUID = null;
-    private boolean Active = false;
+    private long BanID;
+    private UUID UserUUID;
+    private String Reason;
+    private String Area;
+    private String IP;
+    private Date EndDate;
+    private Date ExecuteDate;
+    private UUID ExecuteUserUUID;
+    private boolean Active;
 
     public BanData(long banID, UUID userUUID, String reason, String area, String ip, Date endDate, Date executeDate, UUID executeUserUUID, boolean active){
         this.BanID = banID;

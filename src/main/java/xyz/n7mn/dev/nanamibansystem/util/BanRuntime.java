@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class BanRuntime {
-
     public static void ban(Plugin plugin, String Reason, String Area, UUID TargetPlayer, UUID FromPlayer){
         // BAN処理
         if (TargetPlayer == null){
