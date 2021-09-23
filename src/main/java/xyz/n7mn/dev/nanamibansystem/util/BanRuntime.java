@@ -216,6 +216,7 @@ public class BanRuntime {
     }
 
 
+    @Deprecated
     public static boolean isBan(Plugin plugin, UUID targetPlayer){
         try {
             boolean found = false;
@@ -260,6 +261,52 @@ public class BanRuntime {
         return false;
     }
 
+    public static boolean isBan(Plugin plugin, UUID targetPlayer, String area){
+        try {
+            boolean found = false;
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            }
+
+            found = false;
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            con.setAutoCommit(true);
+
+            PreparedStatement statement1 = con.prepareStatement("SELECT BanID FROM BanList WHERE UserUUID = ? AND Area = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
+            statement1.setString(1, targetPlayer.toString());
+            statement1.setString(2, area);
+            statement1.setTimestamp(3, new Timestamp(new Date().getTime()));
+
+            ResultSet set1 = statement1.executeQuery();
+
+            if (set1.next()){
+                found = set1.getInt("BanID") > 0;
+            }
+
+            set1.close();
+            statement1.close();
+            con.close();
+
+            return found;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Deprecated
     public static Map<Integer, String> getReason(Plugin plugin, UUID targetPlayer){
 
         HashMap<Integer, String> map = new HashMap<>();
@@ -286,6 +333,52 @@ public class BanRuntime {
             PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
             statement1.setString(1, targetPlayer.toString());
             statement1.setTimestamp(2, new Timestamp(new Date().getTime()));
+
+            ResultSet set1 = statement1.executeQuery();
+
+            while (set1.next()){
+                map.put(set1.getInt("BanID"), set1.getString("Reason"));
+            }
+
+            set1.close();
+            statement1.close();
+            con.close();
+
+            return map;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return map;
+    }
+
+    public static Map<Integer, String> getReason(Plugin plugin, UUID targetPlayer, String Area){
+
+        HashMap<Integer, String> map = new HashMap<>();
+
+        try {
+            boolean found = false;
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            }
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            con.setAutoCommit(true);
+
+            PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? AND Area = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
+            statement1.setString(1, targetPlayer.toString());
+            statement1.setString(2, Area);
+            statement1.setTimestamp(3, new Timestamp(new Date().getTime()));
 
             ResultSet set1 = statement1.executeQuery();
 
@@ -363,4 +456,6 @@ public class BanRuntime {
         return map;
 
     }
+
+
 }

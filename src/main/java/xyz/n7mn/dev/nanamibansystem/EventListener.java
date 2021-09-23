@@ -28,22 +28,27 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void AsyncPlayerPreLoginEvent (AsyncPlayerPreLoginEvent e){
 
-        if (BanRuntime.isBan(plugin, e.getUniqueId())){
-            Map<Integer, String> reason = BanRuntime.getReason(plugin, e.getUniqueId());
+        if (BanRuntime.isBan(plugin, e.getUniqueId(), "all") || BanRuntime.isBan(plugin, e.getUniqueId(), plugin.getConfig().getString("Area"))){
+            Map<Integer, String> reason = BanRuntime.getReason(plugin, e.getUniqueId(), plugin.getConfig().getString("Area"));
 
+            if (reason.isEmpty()){
+                reason = BanRuntime.getReason(plugin, e.getUniqueId(), "all");
+            }
+
+            Map<Integer, String> finalReason = reason;
             reason.forEach((id, rea)->{
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "" +
                         "--- ななみ鯖 ---\n" +
                         "あなたは以下の理由でBANされています。\n" +
                         "解除申請は "+plugin.getConfig().getString("DiscordInviteURL")+" まで\n" +
                         "\n" +
-                        "理由: " + reason.get(id)
+                        "理由: " + finalReason.get(id)
                 );
 
                 new Thread(()->{
                     for (Player player : plugin.getServer().getOnlinePlayers()){
                         if (player.isOp()){
-                            player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + "BANされている " + e.getName() + "さんが入室しようとしました。(BAN理由: "+reason.get(id)+" )");
+                            player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + "BANされている " + e.getName() + "さんが入室しようとしました。(BAN理由: "+ finalReason.get(id)+" )");
                         }
                     }
                 }).start();
