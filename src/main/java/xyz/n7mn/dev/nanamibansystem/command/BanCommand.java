@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -45,15 +46,22 @@ public class BanCommand implements CommandExecutor {
             }
 
             // Username ----> UUID
-            try {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url("https://api.mojang.com/users/profiles/minecraft/"+username).build();
-                Response response = client.newCall(request).execute();
-                UUID2Username json = new Gson().fromJson(response.body().string(), UUID2Username.class);
-                targetUUID = json.getUUID();
+            Player player = Bukkit.getServer().getPlayer(username);
+            if (player != null){
+                targetUUID = player.getUniqueId();
+            }
 
-            } catch (Exception ex){
-                ex.fillInStackTrace();
+            if (targetUUID == null){
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url("https://api.mojang.com/users/profiles/minecraft/"+username).build();
+                    Response response = client.newCall(request).execute();
+                    UUID2Username json = new Gson().fromJson(response.body().string(), UUID2Username.class);
+                    targetUUID = json.getUUID();
+
+                } catch (Exception ex){
+                    ex.fillInStackTrace();
+                }
             }
 
             BanRuntime.ban(plugin, sb.toString(), area, targetUUID, ((Player) sender).getUniqueId());
