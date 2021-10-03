@@ -20,6 +20,7 @@ public final class NanamiBanSystem extends JavaPlugin {
         PluginCommand baninfo = getCommand("baninfo");
         PluginCommand antiProxy = getCommand("antiproxy");
         PluginCommand antiVPN = getCommand("antivpn");
+        PluginCommand alert = getCommand("ban-alert");
 
         gban.setExecutor(new GlobalBanCommand(this));
         gban.setTabCompleter(tab);
@@ -34,6 +35,10 @@ public final class NanamiBanSystem extends JavaPlugin {
 
         antiProxy.setExecutor(new AntiProxyCommand(this));
         antiVPN.setExecutor(new AntiVPNCommand(this));
+
+        alert.setExecutor(new AlertCommand());
+
+
 
         getServer().getPluginManager().registerEvents(new EventListener(this), this);
         getLogger().info(getName() + " Ver "+getDescription().getVersion()+" 起動");
