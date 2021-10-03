@@ -12,7 +12,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
+import xyz.n7mn.dev.nanamibansystem.util.AlertData;
 import xyz.n7mn.dev.nanamibansystem.util.BanRuntime;
 
 import java.io.IOException;
@@ -90,6 +92,9 @@ public class EventListener implements Listener {
                     new Thread(()->{
                         for (Player player : plugin.getServer().getOnlinePlayers()){
                             if (player.isOp()){
+                                if (!AlertData.get(player.getUniqueId())){
+                                    continue;
+                                }
                                 player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + e.getName() + "さんが入室しようとしました。(理由: Proxy判定のIPからの接続 )");
                             }
                         }
@@ -102,6 +107,9 @@ public class EventListener implements Listener {
 
                     new Thread(()->{
                         for (Player player : plugin.getServer().getOnlinePlayers()){
+                            if (!AlertData.get(player.getUniqueId())){
+                                continue;
+                            }
                             if (player.isOp()){
                                 player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + e.getName() + "さんが入室しようとしました。(理由: VPN判定のIPからの接続 )");
                             }
@@ -112,6 +120,13 @@ public class EventListener implements Listener {
             }
         }
 
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void PlayerJoinEvent(PlayerJoinEvent e){
+        if (e.getPlayer().isOp()){
+            AlertData.set(e.getPlayer().getUniqueId(), true);
+        }
     }
 
 }
