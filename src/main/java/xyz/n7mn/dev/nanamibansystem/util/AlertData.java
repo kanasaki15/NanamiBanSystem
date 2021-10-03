@@ -12,7 +12,7 @@ public static void set (UUID uuid, boolean flag){
         alertList = new HashMap<>();
     }
 
-    if (alertList.get(uuid)){
+    if (alertList.get(uuid) != null){
         alertList.remove(uuid);
     }
 
