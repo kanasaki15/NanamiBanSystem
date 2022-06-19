@@ -26,10 +26,10 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
-    compile 'com.squareup.okhttp3:okhttp:4.9.1'
-    compile 'mysql:mysql-connector-java:8.0.26'
+    compile 'com.squareup.okhttp3:okhttp:4.9.3'
+    compile 'mysql:mysql-connector-java:8.0.29'
 
-
+    compile 'com.google.code.gson:gson:2.9.0'
 }
 
 processResources {
