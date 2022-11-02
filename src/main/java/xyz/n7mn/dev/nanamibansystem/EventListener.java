@@ -50,7 +50,9 @@ public class EventListener implements Listener {
                 new Thread(()->{
                     for (Player player : plugin.getServer().getOnlinePlayers()){
                         if (player.isOp()){
-                            player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + "BANされている " + e.getName() + "さんが入室しようとしました。(BAN理由: "+ finalReason.get(id)+" )");
+                            if (AlertData.get(player.getUniqueId())){
+                                player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] " + ChatColor.RESET + "BANされている " + e.getName() + "さんが入室しようとしました。(BAN理由: "+ finalReason.get(id)+" )");
+                            }
                         }
                     }
                 }).start();
