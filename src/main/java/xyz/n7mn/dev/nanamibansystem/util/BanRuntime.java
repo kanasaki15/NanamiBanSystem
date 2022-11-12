@@ -56,9 +56,9 @@ public class BanRuntime {
                         OkHttpClient client = new OkHttpClient();
                         Request request = new Request.Builder().url("https://api.mojang.com/user/profiles/"+TargetPlayer.toString().replaceAll("-","")+"/names").build();
                         Response response = client.newCall(request).execute();
-                        Username2UUID[] json = new Gson().fromJson(response.body().string(), Username2UUID[].class);
+                        UserProfile json = new Gson().fromJson(response.body().string(), UserProfile.class);
 
-                        banUserName = json[json.length - 1].getName();
+                        banUserName = json.getUserName();
 
                     } catch (Exception ex){
                         ex.printStackTrace();

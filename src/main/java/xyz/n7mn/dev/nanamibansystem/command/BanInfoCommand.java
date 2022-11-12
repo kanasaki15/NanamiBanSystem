@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 import xyz.n7mn.dev.nanamibansystem.util.BanData;
 import xyz.n7mn.dev.nanamibansystem.util.BanRuntime;
 import xyz.n7mn.dev.nanamibansystem.util.UUID2Username;
-import xyz.n7mn.dev.nanamibansystem.util.Username2UUID;
+import xyz.n7mn.dev.nanamibansystem.util.UserProfile;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -89,11 +89,11 @@ public class BanInfoCommand implements CommandExecutor {
                             String userName = "";
                             try {
                                 OkHttpClient client = new OkHttpClient();
-                                Request request = new Request.Builder().url("https://api.mojang.com/user/profiles/"+data.getExecuteUserUUID().toString().replaceAll("-","")+"/names").build();
+                                Request request = new Request.Builder().url("https://sessionserver.mojang.com/session/minecraft/profile/"+data.getExecuteUserUUID().toString().replaceAll("-","")+"").build();
                                 Response response = client.newCall(request).execute();
-                                Username2UUID[] json = new Gson().fromJson(response.body().string(), Username2UUID[].class);
+                                UserProfile json = new Gson().fromJson(response.body().string(), UserProfile.class);
 
-                                userName = json[json.length - 1].getName();
+                                userName = json.getUserName();
 
                             } catch (Exception ex){
                                 ex.printStackTrace();
@@ -145,11 +145,11 @@ public class BanInfoCommand implements CommandExecutor {
                             String userName = "";
                             try {
                                 OkHttpClient client = new OkHttpClient();
-                                Request request = new Request.Builder().url("https://api.mojang.com/user/profiles/"+data.getExecuteUserUUID().toString().replaceAll("-","")+"/names").build();
+                                Request request = new Request.Builder().url("https://sessionserver.mojang.com/session/minecraft/profile/"+data.getExecuteUserUUID().toString().replaceAll("-","")+"").build();
                                 Response response = client.newCall(request).execute();
-                                Username2UUID[] json = new Gson().fromJson(response.body().string(), Username2UUID[].class);
+                                UserProfile json = new Gson().fromJson(response.body().string(), UserProfile.class);
 
-                                userName = json[json.length - 1].getName();
+                                userName = json.getUserName();
 
                             } catch (Exception ex){
                                 ex.printStackTrace();
