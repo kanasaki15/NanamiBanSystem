@@ -54,7 +54,7 @@ public class BanRuntime {
                     //System.out.println("aiue");
                     try {
                         OkHttpClient client = new OkHttpClient();
-                        Request request = new Request.Builder().url("https://api.mojang.com/user/profiles/"+TargetPlayer.toString().replaceAll("-","")+"/names").build();
+                        Request request = new Request.Builder().url("https://sessionserver.mojang.com/session/minecraft/profile/"+TargetPlayer.toString().replaceAll("-","")+"").build();
                         Response response = client.newCall(request).execute();
                         UserProfile json = new Gson().fromJson(response.body().string(), UserProfile.class);
 
