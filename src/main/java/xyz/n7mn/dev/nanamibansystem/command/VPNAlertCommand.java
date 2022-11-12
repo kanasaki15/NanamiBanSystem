@@ -5,9 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import xyz.n7mn.dev.nanamibansystem.util.AlertData;
+import xyz.n7mn.dev.nanamibansystem.util.VPNAlertData;
 
-public class AlertCommand implements CommandExecutor {
+public class VPNAlertCommand implements CommandExecutor {
 
 
     @Override
@@ -19,14 +19,14 @@ public class AlertCommand implements CommandExecutor {
                 return true;
             }
 
-            if (AlertData.get(player.getUniqueId())){
-                AlertData.set(player.getUniqueId(), false);
-                player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] "+ChatColor.RESET+"BAN者の接続試行通知をオフにしました。");
+            if (VPNAlertData.get(player.getUniqueId())){
+                VPNAlertData.set(player.getUniqueId(), false);
+                player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] "+ChatColor.RESET+"Proxy/VPN接続試行通知をオフにしました。");
                 return true;
             }
 
-            AlertData.set(player.getUniqueId(), true);
-            player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] "+ChatColor.RESET+"BAN者の接続試行通知をオンにしました。");
+            VPNAlertData.set(player.getUniqueId(), true);
+            player.sendMessage(ChatColor.YELLOW + "[ななみ鯖] "+ChatColor.RESET+"Proxy/VPN接続試行通知をオンにしました。");
         }
 
         return true;

@@ -43,6 +43,11 @@ commands:
     usage: '/antialert'
     permission: 'bansystem.ban'
     permission-message: ''
+  vpn-alert:
+    description: ''
+    usage: '/antialert'
+    permission: 'bansystem.ban'
+    permission-message: ''
   report:
     description: ''
     usage: '/report <Reason>'
