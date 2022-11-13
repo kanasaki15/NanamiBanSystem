@@ -2,8 +2,6 @@ package xyz.n7mn.dev.nanamibansystem;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.n7mn.dev.nanamibansystem.command.*;
-import xyz.n7mn.dev.nanamibansystem.tab.PlayerListForTab;
 
 public final class NanamiBanSystem extends JavaPlugin {
 
@@ -12,7 +10,6 @@ public final class NanamiBanSystem extends JavaPlugin {
         // Plugin startup logic
         saveDefaultConfig();
 
-        PlayerListForTab tab = new PlayerListForTab(1);
         PluginCommand gban = getCommand("gban");
         PluginCommand ban = getCommand("lban");
         PluginCommand ipban = getCommand("ipban");
@@ -24,28 +21,10 @@ public final class NanamiBanSystem extends JavaPlugin {
         PluginCommand alert2 = getCommand("vpn-alert");
         PluginCommand report = getCommand("report");
 
-        gban.setExecutor(new GlobalBanCommand(this));
-        gban.setTabCompleter(tab);
-        ban.setExecutor(new BanCommand(this));
-        ban.setTabCompleter(tab);
-        ipban.setExecutor(new IPBanCommand(this));
-        ipban.setTabCompleter(tab);
-        unban.setExecutor(new UnBanCommand());
-        unban.setTabCompleter(tab);
-        baninfo.setExecutor(new BanInfoCommand(this));
-        baninfo.setTabCompleter(tab);
-
-        antiProxy.setExecutor(new AntiProxyCommand(this));
-        antiVPN.setExecutor(new AntiVPNCommand(this));
-
-        alert.setExecutor(new AlertCommand());
-        alert2.setExecutor(new VPNAlertCommand());
-
-        report.setExecutor(new ReportCommand(this));
 
 
 
-        getServer().getPluginManager().registerEvents(new EventListener(this), this);
+        //getServer().getPluginManager().registerEvents(new EventListener(this), this);
         getLogger().info(getName() + " Ver "+getDescription().getVersion()+" 起動");
     }
 
