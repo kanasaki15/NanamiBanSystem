@@ -5,24 +5,24 @@ import java.util.UUID;
 
 public class VPNAlertData {
 
-private static HashMap<UUID, Boolean> alertList = null;
+private static HashMap<UUID, Boolean> vpnAlertList = null;
 
 public static void set (UUID uuid, boolean flag){
-    if (alertList == null){
-        alertList = new HashMap<>();
+    if (vpnAlertList == null){
+        vpnAlertList = new HashMap<>();
     }
 
-    if (alertList.get(uuid) != null){
-        alertList.remove(uuid);
+    if (vpnAlertList.get(uuid) != null){
+        vpnAlertList.remove(uuid);
     }
 
-    alertList.put(uuid, flag);
+    vpnAlertList.put(uuid, flag);
 }
 
 public static boolean get(UUID uuid){
 
     try {
-        return alertList.get(uuid);
+        return vpnAlertList.get(uuid);
     } catch (Exception e){
         return false;
     }
