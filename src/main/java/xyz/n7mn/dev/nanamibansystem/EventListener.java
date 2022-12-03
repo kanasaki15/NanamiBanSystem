@@ -129,6 +129,7 @@ public class EventListener implements Listener {
     public void PlayerJoinEvent(PlayerJoinEvent e){
         if (e.getPlayer().isOp()){
             AlertData.set(e.getPlayer().getUniqueId(), true);
+            VPNAlertData.set(e.getPlayer().getUniqueId(), true);
         }
     }
 
