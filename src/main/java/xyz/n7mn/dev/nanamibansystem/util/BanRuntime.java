@@ -72,14 +72,15 @@ public class BanRuntime {
 
                 while (drivers.hasMoreElements()){
                     Driver driver = drivers.nextElement();
-                    if (driver.equals(new com.mysql.cj.jdbc.Driver())){
+                    //if (driver.equals(new com.mysql.cj.jdbc.Driver())){
+                    if (driver.equals(new org.mariadb.jdbc.Driver())){
                         found = true;
                         break;
                     }
                 }
 
                 if (!found){
-                    DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                    DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
                 }
             } catch (SQLException e){
                 e.printStackTrace();
@@ -94,7 +95,7 @@ public class BanRuntime {
             try {
                 int banId = 0;
 
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":"+plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+                Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":"+plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
                 con.setAutoCommit(true);
                 PreparedStatement statement1 = con.prepareStatement("SELECT BanID FROM BanList ORDER BY BanID DESC");
                 ResultSet set1 = statement1.executeQuery();
@@ -187,17 +188,17 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("UPDATE `BanList` SET Active = 0 WHERE BanID = ?");
@@ -224,19 +225,19 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
             found = false;
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("SELECT BanID FROM BanList WHERE UserUUID = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
@@ -268,19 +269,19 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
             found = false;
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("SELECT BanID FROM BanList WHERE UserUUID = ? AND Area = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
@@ -317,17 +318,17 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
@@ -362,17 +363,17 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? AND Area = ? AND EndDate >= ? AND Active = 1 ORDER BY BanID DESC");
@@ -409,17 +410,17 @@ public class BanRuntime {
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
-                if (driver.equals(new com.mysql.cj.jdbc.Driver())) {
+                if (driver.equals(new org.mariadb.jdbc.Driver())) {
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+                DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
             }
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://" + plugin.getConfig().getString("MySQLServer") + ":" + plugin.getConfig().getInt("MySQLPort") + "/" + plugin.getConfig().getString("MySQLDatabase") + plugin.getConfig().getString("MySQLOption"), plugin.getConfig().getString("MySQLUsername"), plugin.getConfig().getString("MySQLPassword"));
             con.setAutoCommit(true);
 
             PreparedStatement statement1 = con.prepareStatement("SELECT * FROM BanList WHERE UserUUID = ? ORDER BY BanID DESC");
